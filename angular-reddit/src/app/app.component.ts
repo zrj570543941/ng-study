@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   addArticle(e) {
-    e.preventDefault();S
+    e.preventDefault();
     console.log(111);
   }
 }
