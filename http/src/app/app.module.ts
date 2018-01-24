@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { SimpleHttpComponent } from './simple-http/simple-http.component';
 import { YouTubeSearchComponent } from './you-tube-search/you-tube-search.component';
 
+import { youTubeSearchInjectables } from './you-tube-search/you-tube-search.injectables';
+
 
 @NgModule({
   declarations: [
@@ -25,9 +27,9 @@ import { YouTubeSearchComponent } from './you-tube-search/you-tube-search.compon
     FormsModule,
     HttpClientModule,
   ],
-  providers: [
-    // youTubeSearchInjectables
-  ],
+  providers:
+    youTubeSearchInjectables
+  ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }
