@@ -1,10 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import {RouterModule,  Routes} from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import {
+  RouterModule,
+  Routes
+} from '@angular/router';
 
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   // basic routes
@@ -15,31 +22,46 @@ const routes: Routes = [
   { path: 'contactus', redirectTo: 'contact' },
 
   // authentication demo
-  { path: 'login', component: LoginComponent },
-  {
-    path: 'protected',
-    component: ProtectedComponent,
-    canActivate: [ LoggedInGuard ]
-  },
+  // { path: 'login', component: LoginComponent },
+  // {
+  //   path: 'protected',
+  //   component: ProtectedComponent,
+  //   canActivate: [ LoggedInGuard ]
+  // },
 
   // nested
-  {
-    path: 'products',
-    component: ProductsComponent,
-    children: childRoutes
-  }
+  // {
+  //   path: 'products',
+  //   component: ProductsComponent,
+  //   children: childRoutes
+  // }
 ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
+    ContactComponent,
+    AboutComponent,
+    // LoginComponent,
+    // ProtectedComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpModule,
     RouterModule.forRoot(routes),
+
+    // added this for our child module
+    // ProductsModule
   ],
-  providers: [],
+  providers: [
+    // uncomment this for "hash-bang" routing
+    // { provide: LocationStrategy, useClass: HashLocationStrategy }
+    // AUTH_PROVIDERS,
+    // LoggedInGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
