@@ -12,6 +12,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
+import { ProtectedComponent } from './protected/protected.component';
+
+import { AUTH_PROVIDERS } from './auth.service';
+import { LoggedInGuard } from './logged-in.guard';
 
 const routes: Routes = [
   // basic routes
@@ -22,12 +27,12 @@ const routes: Routes = [
   { path: 'contactus', redirectTo: 'contact' },
 
   // authentication demo
-  // { path: 'login', component: LoginComponent },
-  // {
-  //   path: 'protected',
-  //   component: ProtectedComponent,
-  //   canActivate: [ LoggedInGuard ]
-  // },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'protected',
+    component: ProtectedComponent,
+    canActivate: [ LoggedInGuard ]
+  },
 
   // nested
   // {
@@ -44,8 +49,8 @@ const routes: Routes = [
     HomeComponent,
     ContactComponent,
     AboutComponent,
-    // LoginComponent,
-    // ProtectedComponent,
+    LoginComponent,
+    ProtectedComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,7 @@ const routes: Routes = [
   providers: [
     // uncomment this for "hash-bang" routing
     // { provide: LocationStrategy, useClass: HashLocationStrategy }
-    // AUTH_PROVIDERS,
+    AUTH_PROVIDERS,
     // LoggedInGuard
   ],
   bootstrap: [AppComponent]
