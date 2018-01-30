@@ -7,6 +7,11 @@ import {
   Routes
 } from '@angular/router';
 
+import {
+  routes as childRoutes,
+  ProductsModule
+} from './products/products.module';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -17,6 +22,7 @@ import { ProtectedComponent } from './protected/protected.component';
 
 import { AUTH_PROVIDERS } from './auth.service';
 import { LoggedInGuard } from './logged-in.guard';
+import { ProductsComponent } from './products/products.component';
 
 const routes: Routes = [
   // basic routes
@@ -35,11 +41,11 @@ const routes: Routes = [
   },
 
   // nested
-  // {
-  //   path: 'products',
-  //   component: ProductsComponent,
-  //   children: childRoutes
-  // }
+  {
+    path: 'products',
+    component: ProductsComponent,
+    children: childRoutes
+  }
 ];
 
 
@@ -51,6 +57,7 @@ const routes: Routes = [
     AboutComponent,
     LoginComponent,
     ProtectedComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +66,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
 
     // added this for our child module
-    // ProductsModule
+    ProductsModule
   ],
   providers: [
     // uncomment this for "hash-bang" routing
