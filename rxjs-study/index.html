@@ -27,13 +27,14 @@
         </li>
     </ul>
 </div>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/core.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.async.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.coincidence.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.binding.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.time.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/2.0.7/rx.dom.js"></script>
+<!--<script src="https://cdn.bootcss.com/jquery/3.3.1/core.js"></script>-->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.js"></script>-->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.async.js"></script>-->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.coincidence.js"></script>-->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.binding.js"></script>-->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs/2.2.26/rx.time.js"></script>-->
+<!--<script src="http://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/2.0.7/rx.dom.js"></script>-->
+<script src="https://unpkg.com/rxjs@5.5.6/bundles/Rx.min.js"></script>
 <script>
 
     /**
@@ -42,54 +43,67 @@
      */
 
 
-    var close1Button = document.querySelector('.close1');
-    var close1ClickStream = Rx.Observable.fromEvent(close1Button, 'click');
+//var refreshButton = document.querySelector('.refresh');
+//var refreshClickStream = Rx.Observable.fromEvent(refreshButton, 'click');
+//
+//// var closeButton1 = document.querySelector('.close1');
+//// var close1ClickStream = Rx.Observable.fromEvent(closeButton1, 'click');
+//// and the same logic for close2 and close3
+//
+////在页面渲染完时和refreshClick时会触发该stream
+//var requestStream = refreshClickStream.startWith('startup click')
+//  .map(function() {
+//    var randomOffset = Math.floor(Math.random()*500);
+//    return 'https://api.github.com/users?since=' + randomOffset;
+//  });
+//
+////在页面渲染完时和refreshClick时会触发该stream
+//var responseStream = requestStream
+//  .flatMap(function (requestUrl) {
+//    return Rx.Observable.fromPromise($.ajax({url: requestUrl}));
+//  });
+//
+//var suggestion1Stream = close1ClickStream.startWith('startup click')
+//  .combineLatest(responseStream,
+//    function(click, listUsers) {
+//      return listUsers[Math.floor(Math.random()*listUsers.length)];
+//    }
+//  )
+//  .merge(
+//    refreshClickStream.map(function(){ return null; })
+//  )
+//  .startWith(null);
+//// and the same logic for suggestion2Stream and suggestion3Stream
+//
+//suggestion1Stream.subscribe(function(suggestion) {
+//  if (suggestion === null) {
+//    // hide the first suggestion DOM element
+//  }
+//  else {
+//    // show the first suggestion DOM element
+//    // and render the data
+//  }
+//});
+    window.onload = function() {
+        function multiplyByTen(input) {
+            var output = Rx.Observable.create(function subscribe(observer) {
+                input.subscribe({
+                    next: function(v) {observer.next(10 * v)},
+                    error: function(err) {observer.error(err)},
+                    complete: function() {observer.complete()},
+                });
+            });
+            return output;
+        }
 
-    var refreshOneItemStream = close1ClickStream.map(function(item, index) {
-        return index;
-    });
-
-
-    var refreshButton = document.querySelector('.refresh');
-    var refreshClickStream = Rx.Observable.fromEvent(refreshButton, 'click');
-    var requestStream = refreshClickStream.map(function () {
-        var randomOffset = Math.floor(Math.random()*500);
-        return 'https://api.github.com/users?since=' + randomOffset;
-    })
-    var startupRequestStream = Rx.Observable.just('https://api.github.com/users');
-    var requestStream = Rx.Observable.merge(
-        requestOnRefreshStream, startupRequestStream
-    );
-
-    var responseStream = requestStream
-        .flatMap(function(requestUrl) {
-            return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
+        var input = Rx.Observable.from([1, 2, 3, 4]);
+        var output = multiplyByTen(input);
+        output.subscribe(function(x){console.log(x)} );
+        input.subscribe(function (x) {
+            console.log(x);
         });
+    };
 
-    // first get one random user from the response
-    var suggestion1Stream = responseStream
-        .map(function(listUsers) {
-            // get one random user from the list
-            return listUsers[Math.floor(Math.random()*listUsers.length)];
-        })
-        .merge(
-            //use null to sign that currently server hasn't responded
-            refreshClickStream.map(function(){ return null; })
-        );
-
-    suggestion1Stream.subscribe(function(suggestion) {
-        if (suggestion === null) {
-            // hide the first suggestion DOM element
-        }
-        else {
-            // show the first suggestion DOM element
-            // and render the data
-        }
-    });
-
-    responseStream.subscribe(function(response) {
-        // render `response` to the DOM however you wish
-    });
 </script>
 </body>
 </html>
