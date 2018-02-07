@@ -91,6 +91,8 @@ export class MessagesService {
     this.newMessages.next(message);
   }
 
+  // get all of the messages from a thread that are not
+  // from a particular user
   messagesForThreadUser(thread: Thread, user: User): Observable<Message> {
     return this.newMessages
       .filter((message: Message) => {
