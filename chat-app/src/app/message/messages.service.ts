@@ -12,7 +12,7 @@ interface IMessagesOperation extends Function {
 
 @Injectable()
 export class MessagesService {
-  // a stream that publishes new messages only once
+  // a stream that every time publishes a new message and this new message  only be published once
   newMessages: Subject<Message> = new Subject<Message>();
 
   // `messages` is a stream that emits an array of the most up to date messages
@@ -23,7 +23,8 @@ export class MessagesService {
   // stored in `messages`)
   updates: Subject<any> = new Subject<any>();
 
-  // action streams
+  // action streams,it'll take a new message to push
+  // to the messages stream
   create: Subject<Message> = new Subject<Message>();
   markThreadAsRead: Subject<any> = new Subject<any>();
 
