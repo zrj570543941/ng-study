@@ -22,6 +22,7 @@ export class ChatThreadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // 验证当前的thread是否是选中的那个
     this.threadsService.currentThread
       .subscribe( (currentThread: Thread) => {
         this.selected = currentThread &&

@@ -23,12 +23,12 @@ import { MessagesService } from '../message/messages.service';
 export class ChatWindowComponent implements OnInit {
   messages: Observable<any>;
   currentThread: Thread;
-  draftMessage: Message;
+  draftMessage: Message; // 表示将要发送的新消息
   currentUser: User;
 
   constructor(public messagesService: MessagesService,
               public threadsService: ThreadsService,
-              public UsersService: UsersService,
+              public usersService: UsersService,
               public el: ElementRef) {
   }
 
@@ -42,7 +42,7 @@ export class ChatWindowComponent implements OnInit {
         this.currentThread = thread;
       });
 
-    this.UsersService.currentUser
+    this.usersService.currentUser
       .subscribe(
         (user: User) => {
           this.currentUser = user;
