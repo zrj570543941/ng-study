@@ -71,9 +71,10 @@ export class ChatExampleData {
     this.setupBots(messagesService);
   }
 
+  //
   static setupBots(messagesService: MessagesService): void {
 
-    // echo bot，用来加一些默认的messagesForAThread到newMesaages中去
+    // echo bot，作用是一旦我们往一个thread里发送信息，机器人就会自动复制这条message并发送会给我们
     messagesService.messagesForThreadUser(tEcho, echo)
       .forEach( (message: Message): void => {
         messagesService.addMessage(
